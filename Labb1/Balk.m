@@ -18,7 +18,6 @@ tolerance = 10^(-8);
 diff = 1;
 maxiter = 100;
 vekofdiffs = [];
-vekofis = [];
 
 % testing
 vekofts = [t];
@@ -26,11 +25,11 @@ vekofts = [t];
 % y(t) - tolerance < H < y(t) + tolerance
 while  diff > tolerance && i < maxiter
     i = i + 1;
+    disp([t y(t) yp(t)])
     tnew = t - y(t)/yp(t);
     diff = abs(tnew - t);
     t = tnew;
     vekofdiffs = [vekofdiffs diff];
-    vekofis = [vekofis i];
     vekofts = [vekofts tnew];
     disp([i t diff])
 end
@@ -41,10 +40,10 @@ y(t)
 
 figure()
 plot([0:0.1:6]', y([0:0.1:6]'), 'g')
-plot(vekofts, y(vekofts), 'o')
+% plot(vekofts, y(vekofts), 'o')
 figure()
 
-semilogy(vekofis, vekofdiffs, 'r')
+semilogy([0:i-1]', vekofdiffs, 'r')
 hold on
 grid on
 
