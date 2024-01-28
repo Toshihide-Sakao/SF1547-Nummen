@@ -6,7 +6,7 @@ clear all
 
 % H = 0.5;
 
-H = 2.864405473;
+H = 2.8464405473
 
 y = @(t) 8*exp(-t/2).*cos(3*t) - H;
 yp = @(t) - 4*cos(3*t)*exp(-t/2) - 24*sin(3*t)*exp(-t/2);
@@ -40,8 +40,8 @@ t
 y(t)
 
 figure()
-plot([0:0.1:6]', y([0:0.1:6]'))
-plot(vekofts, '-o')
+plot([0:0.1:6]', y([0:0.1:6]'), 'g')
+plot(vekofts, y(vekofts), 'o')
 figure()
 
 semilogy(vekofis, vekofdiffs, 'r')
@@ -73,9 +73,12 @@ t
 semilogy(0:isek-1, vekofdiffssek, 'b')
 hold on
 
-%b). Startvärden: t0 = 4 och t1 = 5, Newton har en lite bättre konvergenshastighet eftersom att i är 5 och
-%i för sek är 6. Det är eftersom konvergenshastigheten för sekantmetoden är
-%ungefär 1.62 och newtons är kvadratisk alltså 2.
+% b). Startvärden: t0 = 4 och t1 = 5, Newton har en lite bättre konvergenshastighet eftersom att i är 5 och
+% i för sek är 6. Det är eftersom konvergenshastigheten för sekantmetoden är
+% ungefär 1.62 och newtons är kvadratisk alltså 2.
 
 % c). Konvergenshastigheten för newtons ge en snabbare konvergens än
 % sekant.
+
+% d). Startvärde 2 med 18 iterationer. Det är möjligt att se att konvergenshastigheten är
+% kvadratisk och startvärdet är väldigt känsligt.
