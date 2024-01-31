@@ -1,17 +1,19 @@
 clear all
 
+% how to devirate in matlab
 % syms y(t)
 %y(t) = 8*exp(-t/2)*cos(3*t) - 0.5;
 %Df = diff(y,t)
 
-% H = 0.5;
+H = 0.5;
 
-H = 2.8464405473
+% d fråga
+% H = 2.8464405473
 
 y = @(t) 8*exp(-t/2).*cos(3*t) - H;
 yp = @(t) - 4*cos(3*t)*exp(-t/2) - 24*sin(3*t)*exp(-t/2);
 
-% a). 
+% a).
 t = 2;
 i = 0;
 tolerance = 10^(-8);
@@ -33,21 +35,26 @@ while  diff > tolerance && i < maxiter
     vekofts = [vekofts tnew];
     disp([i t diff])
 end
+
+% printar ut och kollar om det stämmer
 diff
 i
 t
 y(t)
+% -------------
 
+% plottar en ny figur med graf y
 figure()
 plot([0:0.1:6]', y([0:0.1:6]'), 'g')
 % plot(vekofts, y(vekofts), 'o')
 figure()
+%.---------------------------
 
 semilogy([0:i-1]', vekofdiffs, 'r')
 hold on
 grid on
 
-% a). t = 4.50, i = 14, startvärde 4.8 
+% a). t = 4.50, i = 14, startvärde 4.8
 
 %b).
 tnew = 5;
