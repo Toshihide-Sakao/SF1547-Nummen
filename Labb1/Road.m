@@ -6,6 +6,8 @@
 % h = plot(xunit, yunit);
 % hold off
 
+format("long")
+
 clear all
 
 Lfunc = @(xp, yp, x, y, L) (xp - x)^2 + (yp - y)^2 - L^2;
