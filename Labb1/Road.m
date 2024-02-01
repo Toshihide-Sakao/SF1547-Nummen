@@ -6,6 +6,8 @@
 % h = plot(xunit, yunit);
 % hold off
 
+format("long")
+
 clear all
 
 format("short")
