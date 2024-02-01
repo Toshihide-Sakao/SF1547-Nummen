@@ -77,24 +77,3 @@ plot(t, Tmod)
 
 % d). Ja, eftersom c2 är ökningen och det är 9.88929693482059e-07 är det en
 % liten ökning.
-
-
-% Trigonometriska identititer
-% sin(a + b) = sin(a) cos(b) + cos(a) sin(b)
-% sin(a - b) = sin(a) cos(b) - cos(a) sin(b)
-% cos(a + b) = cos(a) cos(b) - sin(a) sin(b)
-% cos(a - b) = cos(a) cos(b) + sin(a) sin(b)
-
-% sin(a) = cos(pi/2 - a)
-% cos(a) = sin(pi/2 - a)
-
-% sin(-x) = - sin(x)
-% cos(-x) =   cos(x)
-
-% sin(x) = sin(pi - x)
-% cos(x) = cos(- x)
-
-% sin(2*x) = 2*sin(x)cos(x)
-% cos(2*x) = cos(x)^2 - sin(x)^2 = 1 - 2sin(x)^2 = 2cos(x)^2 - 1
-
-% tan x = (sin x) / (cos x)

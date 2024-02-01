@@ -1,5 +1,7 @@
 clear all
 
+format("longG")
+
 % how to devirate in matlab
 % syms y(t)
 %y(t) = 8*exp(-t/2)*cos(3*t) - 0.5;
@@ -84,7 +86,8 @@ hold on
 % ungefär 1.62 och newtons är kvadratisk alltså 2.
 
 % c). Konvergenshastigheten för newtons ge en snabbare konvergens än
-% sekant.
+% sekant. Eftersom newtons metod oftast är kvadratisk (förrutom när punkten har derivatan 0 som ger en mer linjär) konvergens.
+% Sekant har däremot en konvergens hastighet på 1.62...
 
 % d). Startvärde 2 med 18 iterationer. Det är möjligt att se att konvergenshastigheten är
 % kvadratisk och startvärdet är väldigt känsligt.

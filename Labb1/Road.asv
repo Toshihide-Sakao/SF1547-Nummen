@@ -113,15 +113,7 @@ end
 % p3: (712, 1750)
 % p4: (1020, 0)
 % Det är möjligt att se att den konvergerar kvadratiskt för att man ser att
-% hnormen alltså diffens mängd nollor framför talet dubblerades för varje iterering.
-% Kvadratisk
-
-% b).
-%  c1 =       0
-%  c2 = -0.5836
-%  c3 =  0.0417
-%  c4 = -0.0001
-%  c5 =  0.0000
+% hnormen alltså diffen ökar med 
 
 
 
