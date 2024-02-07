@@ -15,33 +15,29 @@ x = [a:h:b];
 fx = @(beta) f(x, beta);
 fxFirst = @(beta) f(x(1), beta);
 fxEnd = @(beta) f(x(end), beta);
-Th = @(beta) h * (sum(fx(beta)) - 0.5*(fxFirst(beta) + fxEnd(beta)) );
+Th = @(beta) h * (sum(fx(beta)) - 0.5*(fxFirst(beta) + fxEnd(beta)) )
 Vt = @(beta) pi * Th(beta) - 1500;
 
-%sekant
-tolerance = 10^-8;
-maxiter = 100;
-
 % gissningar
-bnew = 0.3;
-b = 0.25;
+tnew = 5;
+t = 4;
 
 i = 0;
 diff = 1;
-vekofdiffs = [];
+vekofdiffssek = [];
 
 while diff > tolerance && i < maxiter
-    i = i +1;
-    bnew = bnew - Vt(bnew)*(bnew - b)/(Vt(bnew) - Vt(b));
-    diff = abs (b - bnew);
-    vekofdiffs = [vekofdiffs diff];
-    b = bnew;
-    bnew = bnew + diff;
+    i = isek +1;
+    tnew = tnew - y(tnew)*(tnew - t)/(y(tnew) - y(t));
+    diff = abs (t - tnew);
+    vekofdiffssek = [vekofdiffssek diff];
+    t = tnew;
+    tnew = tnew + diff;
 end
 
 diff
 i
-b
+t
 
-semilogy(0:i-1, vekofdiffs, 'b')
+semilogy(0:i-1, vekofdiffssek, 'b')
 hold on
