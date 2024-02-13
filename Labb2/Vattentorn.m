@@ -1,25 +1,40 @@
 clear all
+format long 
 
 beta = 0.2;
 % funktion y(b;x)
-f = @(x)  (exp(x.*beta) + 8) / (1 + (x./5).^3);
+f = @(x, beta)  (exp(x.*beta) + 8) ./ (1 + (x./5).^3);
+v = @(x, beta) pi * f(x,beta).^2;
+trapets = @(h, fx) h * (sum(fx) - 0.5*(fx(1) + fx(end)) )
+
+% A(1:2:end) ger alla udda indexes, A(2:2:end) ger alla jämna
+simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(1:2:end)) + 2* sum(fx(2:2:end)) + fx(end))
+
+
 
 a = 0;
 b = 20;
-h = [1 1/2 1/4];
-N = (b - a)./ h;
+h = 1;
+iterations = 10;
+trapetsresults = zeros(iterations,1)
+simpsonresults = zeros(iterations,1)
 
-x1 = [a:h(1):b]
-x2 = [a:h(2):b];
-x3 = [a:h(3):b];
+for i = 1:iterations
+    N = (b - a)/ h;
+    
+    x = [a:h:b];
+    fx = v(x, beta);
 
-fx1 = f(x1)
-fx2 = f(x2);
-fx3 = f(x3);
+    Th = trapets(h, fx);
+    Sh = simpson(h, fx);
+    trapetsresults(i) = Th;
+    simpsonresults(i) = Sh;
+    h = h/2;
+end 
 
-Th1 = h(1) * (sum(fx1) - 0.5*(fx1(1) + fx1(end)) )
-Th2 = h(2) * (sum(fx2) - 0.5*(fx2(1) + fx2(end)) )
-Th3 = h(3) * (sum(fx3) - 0.5*(fx3(1) + fx3(end)) )
+trapetsresults
+simpsonresults
+
 
 %disp ([ 'h = 1  , I = ', num2str ( Th1 ) ]);
 %disp ([ 'h = 1/2, I = ', num2str ( Th2 ) ]);
