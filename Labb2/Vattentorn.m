@@ -7,8 +7,9 @@ f = @(x, beta)  (exp(x.*beta) + 8) ./ (1 + (x./5).^3);
 v = @(x, beta) pi * f(x,beta).^2;
 trapets = @(h, fx) h * (sum(fx) - 0.5*(fx(1) + fx(end)) )
 
-% A(1:2:end) ger alla udda indexes, A(2:2:end) ger alla jämna
-simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(1:2:end)) + 2* sum(fx(2:2:end)) + fx(end))
+% A(1:2:end) ger alla udda indexes, A(2:2:end) ger alla jämna allt annat är
+% bara för att inte få med sista eller första elementet
+simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(3:2:end-1)) + 2* sum(fx(2:2:end-1)) + fx(end))
 
 
 
