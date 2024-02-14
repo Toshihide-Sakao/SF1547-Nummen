@@ -9,13 +9,13 @@ trapets = @(h, fx) h * (sum(fx) - 0.5*(fx(1) + fx(end)) )
 
 % A(1:2:end) ger alla udda indexes, A(2:2:end) ger alla jämna allt annat är
 % bara för att inte få med sista eller första elementet
-simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(3:2:end-1)) + 2* sum(fx(2:2:end-1)) + fx(end))
+simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(2:2:end)) + 2* sum(fx(3:2:end-1)) + fx(end))
 
 
 
 a = 0;
 b = 20;
-h = 1;
+h = 0.1;
 iterations = 10;
 trapetsresults = zeros(iterations,1)
 simpsonresults = zeros(iterations,1)
@@ -36,6 +36,17 @@ end
 trapetsresults
 simpsonresults
 
+trapetsnoggranhet = zeros(size(trapetsresults)-2)
+simpsonnoggranhet = zeros(size(simpsonresults)-2)
+
+p = @(y, i) log2( abs(y(i) - y(i+1)) / abs(y(i+1)-y(i+2)) )
+for i = 1:length(trapetsresults)-2
+    trapetsnoggranhet(i) = p(trapetsresults, i);
+    simpsonnoggranhet(i) = p(simpsonresults, i);
+
+end
+mean(trapetsnoggranhet)
+mean(simpsonnoggranhet)
 
 %disp ([ 'h = 1  , I = ', num2str ( Th1 ) ]);
 %disp ([ 'h = 1/2, I = ', num2str ( Th2 ) ]);
