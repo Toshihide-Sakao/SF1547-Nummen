@@ -1,6 +1,4 @@
 clear all
-format("long")
-
 format long 
 
 
@@ -14,10 +12,6 @@ trapets = @(h, fx) h * (sum(fx) - 0.5*(fx(1) + fx(end)) )
 % ger alla jämna om man har nollindexerat.
 simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(2:2:end)) + 2* sum(fx(3:2:end-1)) + fx(end))
 
-
-beta = 0.2;
-% funktion y(b;x)^2
-f = @(x) ((exp(beta.*x) + 8) ./ (1 + (x./5).^3)).^2;
 
 
 a = 0;
@@ -62,4 +56,3 @@ noggranhet_av_simpson = mean(simpsonnoggranhet)
 %disp ([ 'h = 1  , I = ', num2str ( Th1 ) ]);
 %disp ([ 'h = 1/2, I = ', num2str ( Th2 ) ]);
 %disp ([ 'h = 1/4, I = ', num2str ( Th3 ) ]);
-

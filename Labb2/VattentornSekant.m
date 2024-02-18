@@ -28,4 +28,3 @@ semilogy(secanterror, 'b');
 hold on;
 semilogy(limit);
 hold off;
-
