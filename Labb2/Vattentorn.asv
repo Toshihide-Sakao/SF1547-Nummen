@@ -1,9 +1,8 @@
 clear all
-format("long")
-
 format long 
 
 
+targetVolume = 1500;
 % funktion y(b;x)
 f = @(x, beta)  (exp(x.*beta) + 8) ./ (1 + (x./5).^3);
 v = @(x, beta) pi * f(x,beta).^2;
@@ -14,10 +13,6 @@ trapets = @(h, fx) h * (sum(fx) - 0.5*(fx(1) + fx(end)) )
 % ger alla jämna om man har nollindexerat.
 simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(2:2:end)) + 2* sum(fx(3:2:end-1)) + fx(end))
 
-
-beta = 0.2;
-% funktion y(b;x)^2
-f = @(x) ((exp(beta.*x) + 8) ./ (1 + (x./5).^3)).^2;
 
 
 a = 0;
@@ -53,11 +48,31 @@ for i = 1:length(trapetsresults)-2
     simpsonnoggranhet(i) = p(simpsonresults, i);
 
 end
-noggranhet_av_trapets = mean(trapetsnoggranhet)
-noggranhet_av_simpson = mean(simpsonnoggranhet)
+mean(trapetsnoggranhet)
+mean(simpsonnoggranhet)
 
 
+%secant
+F = @(h, beta) simpson(h, v([a:h:b], beta)) - targetVolume;
 
+h = 0.01;
+x = [a:h:b];
+h0 = 0;
+h1 = 1;
+secanterror = [];
+count = 0;
+tolerance = 10^-8;
+F(h,h1)
+while abs(F(h,h1) - F(h,h0))> tolerance
+       nexth = h1-F(h,h1)* (h1-h0)/(F(h,h1)-F(x,h0));
+       h0=h1;
+       h1=nexth;
+       count = count + 1;
+       secanterror = [secanterror;abs(F(x,h0)-F(x,h1))];
+end
+secant = h1
+secanterror;
+count
 
 %disp ([ 'h = 1  , I = ', num2str ( Th1 ) ]);
 %disp ([ 'h = 1/2, I = ', num2str ( Th2 ) ]);

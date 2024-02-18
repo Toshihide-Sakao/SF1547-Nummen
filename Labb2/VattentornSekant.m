@@ -1,47 +1,31 @@
-clear all
-format("long")
+%secant
 
-% beta = 0.2;
-% funktion y(b;x)^2
-f = @(x, beta) ((exp(beta.*x) + 8) ./ (1 + (x./5).^3)).^2;
+targetVolume = 1500;
+F = @(h, beta) simpson(h, v([a:h:b], beta)) - targetVolume;
 
-a = 0;  %undre
-b = 20; % övre
-h = 1/64;
-N = (b - a)/ h;
+a = 0;
+b = 20;
 
-x = [a:h:b];
-
-fx = @(beta) f(x, beta);
-fxFirst = @(beta) f(x(1), beta);
-fxEnd = @(beta) f(x(end), beta);
-Th = @(beta) h * (sum(fx(beta)) - 0.5*(fxFirst(beta) + fxEnd(beta)) );
-Vt = @(beta) pi * Th(beta) - 1500;
-
-%sekant
+h = 0.01;
+h0 = 0.2;
+h1 = 0.3;
+secanterror = [];
+count = 0;
 tolerance = 10^-8;
-maxiter = 100;
 
-% gissningar
-bnew = 0.3;
-b = 0.25;
-
-i = 0;
-diff = 1;
-vekofdiffs = [];
-
-while diff > tolerance && i < maxiter
-    i = i +1;
-    bnew = bnew - Vt(bnew)*(bnew - b)/(Vt(bnew) - Vt(b));
-    diff = abs (b - bnew);
-    vekofdiffs = [vekofdiffs diff];
-    b = bnew;
-    bnew = bnew + diff;
+while abs(F(h,h1) - F(h,h0))> tolerance
+       nexth = h1-F(h,h1)* (h1-h0)/(F(h,h1)-F(h,h0));
+       h0=h1;
+       h1=nexth;
+       count = count + 1;
+       secanterror = [secanterror;abs(F(h,h0)-F(h,h1))];
 end
+secant = h1
+secanterror;
+count
+limit = zeros(1,30)+ tolerance;
+semilogy(secanterror, 'b');
+hold on;
+semilogy(limit);
+hold off;
 
-diff
-i
-b
-
-semilogy(0:i-1, vekofdiffs, 'b')
-hold on
