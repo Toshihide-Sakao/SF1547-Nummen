@@ -35,19 +35,19 @@ h = (T - t) ./ n;
 
 % gör listor
 q = y0(1);
-qvec = zeros(size(n,2), n(end))';
+qvec = zeros(size(n), n(end))';
 qvec(1,:) = q;
 
 i = y0(2);
-ivec = zeros(size(n,2), n(end))';
+ivec = zeros(size(n), n(4))';
 ivec(1,:) = i;
 
-tvec = zeros(size(n,2), n(end))';
+tvec = zeros(size(n), n(4))';
 tvec(1,:) = t;
 
 % euler
 y = y0;
-for j = 1:size(n,2)
+for j = 1:size(n)
     for i = 1:n(j)
         % doing fram
         y = y + h(j) .* F(t, y, R, L, C);
@@ -64,7 +64,7 @@ end
 
 
 
-for i = 1:size(n,2)
+for i = 1:4
     subplot(2, 2, i)
 
     plot(tvec(:,i), qvec(:,i), 'o')
