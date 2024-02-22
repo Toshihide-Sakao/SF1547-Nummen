@@ -17,15 +17,16 @@ simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(2:2:end)) + 2* sum(fx(3:2:end-1)) + 
 a = 0;
 b = 20;
 beta = 0.2;
-h = 0.1;
-iterations = 10;
-trapetsresults = zeros(iterations,1)
-simpsonresults = zeros(iterations,1)
+h = 0.05;
+iterations = 11;
+trapetsresults = zeros(iterations,1);
+simpsonresults = zeros(iterations,1);
 
 for i = 1:iterations
     N = (b - a)/ h;
     
-    x = [a:h:b];
+    %x = linspace(a,b,N+1);%[a:h:b];
+    x=[a:h:b];
     fx = v(x, beta);
 
     Th = trapets(h, fx);
@@ -33,13 +34,14 @@ for i = 1:iterations
     trapetsresults(i) = Th;
     simpsonresults(i) = Sh;
     h = h/2;
+    
 end 
 
 trapetsresults
 simpsonresults
 
-trapetsnoggranhet = zeros(size(trapetsresults)-2)
-simpsonnoggranhet = zeros(size(simpsonresults)-2)
+trapetsnoggranhet = zeros(size(trapetsresults)-2);
+simpsonnoggranhet = zeros(size(simpsonresults)-2);
 
 p = @(y, i) log2( abs(y(i) - y(i+1)) / abs(y(i+1)-y(i+2)) )
 for i = 1:length(trapetsresults)-2
@@ -47,8 +49,10 @@ for i = 1:length(trapetsresults)-2
     simpsonnoggranhet(i) = p(simpsonresults, i);
 
 end
-noggranhet_av_trapets = mean(trapetsnoggranhet)
+simpsonnoggranhet
+noggranhet_av_trapets = mean(trapetsnoggranhet);
 noggranhet_av_simpson = mean(simpsonnoggranhet)
+2*h
 
 
 
