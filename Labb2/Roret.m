@@ -57,7 +57,7 @@ while fel > tolerance
 
     % värdet vid r=2 för att verifiera
     T = calcT(A, h, ri, T0, TN1, N, a, k);
-
+    
     fel = abs(oldRes - T(N));
 
     % reseta saker
@@ -129,5 +129,4 @@ function t = calcT(A, h, ri, T0, TN1, N, a, k)
     % löser ut T och returnar
     t = A\b;
 end
-
 
