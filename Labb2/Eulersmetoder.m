@@ -27,7 +27,7 @@ f = @(y, t) sin(3.*t) - 2.*y
 
 n = [50 100 200 400];
 t = 0;
-T = 8;
+T = 80;
 h = (T-t) ./ n;
 y = 1.2;
 
@@ -81,12 +81,12 @@ end
 
 felfram
 
-figure(10)
-rowToShow = 4;
+figure(1)
+rowToShow = 1;
 
 hold on
 % Only shows 'rowToShow'
-% plot(tvec(:,rowToShow), yfram(:,rowToShow), '.', 'LineWidth', 2)
+plot(tvec(:,rowToShow), yfram(:,rowToShow), '.', 'LineWidth', 2)
 plot(tvec(:,rowToShow), ybak(:, rowToShow) , '.', 'LineWidth', 2)
 
 % Shows all hs
@@ -96,10 +96,10 @@ plot([0:0.1:T], yanalytisk([0:0.1:T]), 'r')
 
 hold off
 
-figure()
+figure(2)
+loglog(h, felfram, 'r')
 hold on
-loglog(h, felfram, 'o')
-loglog(h, felbak, 'o')
+loglog(h, felbak, 'b')
 
 hold off
 
