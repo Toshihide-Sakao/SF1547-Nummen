@@ -60,4 +60,3 @@ noggranhet_av_simpson = mean(simpsonnoggranhet)
 %disp ([ 'h = 1  , I = ', num2str ( Th1 ) ]);
 %disp ([ 'h = 1/2, I = ', num2str ( Th2 ) ]);
 %disp ([ 'h = 1/4, I = ', num2str ( Th3 ) ]);
-
