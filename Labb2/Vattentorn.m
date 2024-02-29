@@ -17,8 +17,8 @@ simpson = @(h, fx) h/3 * ( fx(1) + 4*sum(fx(2:2:end)) + 2* sum(fx(3:2:end-1)) + 
 a = 0;
 b = 20;
 beta = 0.2;
-h = 0.05;
-iterations = 11;
+h = 0.1;
+iterations = 5;
 trapetsresults = zeros(iterations,1);
 simpsonresults = zeros(iterations,1);
 
@@ -50,7 +50,7 @@ for i = 1:length(trapetsresults)-2
 
 end
 simpsonnoggranhet
-noggranhet_av_trapets = mean(trapetsnoggranhet);
+noggranhet_av_trapets = mean(trapetsnoggranhet)
 noggranhet_av_simpson = mean(simpsonnoggranhet)
 2*h
 

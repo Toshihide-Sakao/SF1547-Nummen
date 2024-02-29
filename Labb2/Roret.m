@@ -48,7 +48,7 @@ TN1 = a*h*Te/k;
 
 % -----------------------------------------------------------------------------------------
 % c) för att hitta ett N med litet fel
-while fel > tolerance
+%while fel > tolerance
     % setup
     A = zeros(N, N);
     h =( rN1 - r0 ) / (N); % Steglangd
@@ -63,7 +63,7 @@ while fel > tolerance
     % reseta saker
     oldRes = T(N);
     N = N*2;
-end
+%end
 
 N = N/2
 oldRes
@@ -79,28 +79,28 @@ hold off
 % -----------------------------------------------------------------------------------------
 % % d).
 %setup
-N = 12800;
-A = zeros(N, N);
-h =( rN1 - r0 ) / (N); % Steglangd
-ri = [r0 + h:h: rN1]';
-TN1 = a*h*Te/k;
-
-as = [0:0.5:10];
-k = 1;
-
-TNs = zeros(20, 1);
-
-for i = 1:size(as, 2)
-    T = calcT(A, h, ri, T0, TN1, N, as(i), k);
-
-    % spara T där r=2
-    TNs(i) = T(N);
-end
-
-figure()
-hold on
-plot(as, TNs, 'r')
-hold off
+% N = 12800;
+% A = zeros(N, N);
+% h =( rN1 - r0 ) / (N); % Steglangd
+% ri = [r0 + h:h: rN1]';
+% TN1 = a*h*Te/k;
+% 
+% as = [0:0.5:10];
+% k = 1;
+% 
+% TNs = zeros(20, 1);
+% 
+% for i = 1:size(as, 2)
+%     T = calcT(A, h, ri, T0, TN1, N, as(i), k);
+% 
+%     % spara T där r=2
+%     TNs(i) = T(N);
+% end
+% 
+% figure()
+% hold on
+% plot(as, TNs, 'r')
+% hold off
 
 % ---------------------------------------------------------------------------------
 

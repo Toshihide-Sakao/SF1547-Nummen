@@ -17,90 +17,91 @@
 % 
 % y(t) = (93/65)*e^(-2t) - (3/13)*cos(3t) + (2/13)*sin(3t)
 
+f = @(t, y) sin(3*t) - 2*y;
+yanalytic = @(t) 93/65 * exp(-2 * t) - 3/13*cos(3*t) + 2/13*sin(3*t);
+y0 = 1.2;
 
-% b). 
+T = 80; 
+t0 = 0;
+ns = [50 100 200  400];
+iterations = length(ns);
+results = {};
+resultsbak = {};
+errorforw = zeros(length(ns),1);
+errorback = zeros(length(ns),1);
+h = (T-t0)./ns;
+for i = 1:iterations
+    n = ns(i);
+    results{i} = zeros(n,1);
+    
+    
+    y = y0;
+    ybak = y0;
+    results{i}(1) = y;
+    resultsbak{i}(1) = ybak;
+    t = t0;
+    for j = 1:n
+        % Fram
+        y = y + h(i)*f(t,y);
+        t = t + h(i);
 
-clear all
-
-yanalytisk = @(t) (93/65).*exp(-2.*t) - (3/13).*cos(3.*t) + (2/13).*sin(3.*t)
-f = @(y, t) sin(3.*t) - 2.*y 
-
-n = [50 100 200 400];
-t = 0;
-T = 80;
-h = (T-t) ./ n;
-y = 1.2;
-
-tvec = zeros(4, n(4))';
-tvec(1,:) = t;
-
-% framåt
-yf = y;
-yfram = zeros(4, n(4))';
-yfram(1,:) = y;
-
-% bakåt 
-% ynew = y + h * f(ynew, tnew)
-% ynew = y + h * (sin(3.*tnew) - 2.*ynew)
-% ynew = y + h*sin(3.*tnew) - 2*h*ynew
-% ynew + 2*h*ynew
-% (2*h + 1) * ynew = y + h*sin(3.*tnew)
-
-% ynew = (y + h*sin(3.*tnew)) / (2*h + 1)
-
-yb = y;
-ybak = zeros(4, n(4))';
-ybak(1,:) = y;
-
-%spara felvärden
-felfram = zeros(4, 1);
-felbak = zeros(4, 1);
-
-for j = 1:4
-    for i = 1:n(j)
-        % doing fram
-        yf = yf + h(j) * f(yf, t);
-        yfram(i + 1,j) = yf;
-
-        t = t + h(j);
-
-        %doing bakåt
-        yb = (yb + h(j)*sin( 3.*t)) ./ (2.*h(j) + 1); % t här är tnext
-        ybak(i + 1, j) = yb;
-
-        % for both
-        tvec(i + 1,j) = t;
+        % Bak
+        ybak = (ybak + h(i) * sin(3.*t)) ./(2.*h(i) + 1); % t här är tn+1
+        
+        % Sparar resultaten
+        results{i}(j+1) = y;
+        resultsbak{i}(j+1) = ybak;
+        
     end
-    felfram(j) = abs(yanalytisk(T) - yf);
-    felbak(j) = abs(yanalytisk(T) - yb);
 
-    t = 0;
-    yf = 1.2;
-    yb = 1.2;
+    % Sparar error
+    errorforw(i) = abs(yanalytic(T) - y);
+    errorback(i) = abs(yanalytic(T)- ybak);
+
+    % plot
+    plot(linspace(t0,T,n+1), results{i} );
+    hold on;
+    plot(linspace(t0,T,n+1), resultsbak{i});
+    hold on;
 end
 
-felfram
+% riktiga
+[Tout, Uout] = ode45(f, [0 T], y0);
+plot(Tout,Uout, 'o');
+axis auto
+%legend('50','100','200','400', 'ode45');
+hold off;
 
-figure(1)
-rowToShow = 1;
+% felplot
+figure(2);
+loglog(h, errorforw, 'r');
+hold on;
+loglog(h, errorback, '-ob');
+hold off;
 
-hold on
-% Only shows 'rowToShow'
-plot(tvec(:,rowToShow), yfram(:,rowToShow), '.', 'LineWidth', 2)
-plot(tvec(:,rowToShow), ybak(:, rowToShow) , '.', 'LineWidth', 2)
+% subplottar fram
+figure(3);
+root_of_ns = ceil(sqrt(length(ns)));
+for i = 1:iterations
+    subplot(root_of_ns,root_of_ns,i);
+    plot(linspace(t0,T,ns(i)+1), results{i});
+    hold on;
+    plot(Tout,Uout, 'g');
+    hold off;
+end
 
-% Shows all hs
-% plot(tvec, yfram, '.', 'LineWidth', 2)
-% plot(tvec, ybak,  '.', 'LineWidth', 2)
-plot([0:0.1:T], yanalytisk([0:0.1:T]), 'r')
+% subplottar bak
+figure(4);
+root_of_ns = ceil(sqrt(length(ns)));
+for i = 1:iterations
+    subplot(root_of_ns,root_of_ns,i);
+    plot(linspace(t0,T,ns(i)+1), resultsbak{i});
+    hold on;
+    plot(Tout,Uout, 'g');
+    hold off;
+end
+%När n ökar så närmar vi oss den korrekta lösningen (ode45)
 
-hold off
-
-figure(2)
-loglog(h, felfram, 'r')
-hold on
-loglog(h, felbak, 'b')
-
-hold off
-
-
+%Eulers bak är stabil för samtliga h medans eulers fram kräver h > 100.
+%Detta är att förvantas då eulers fram endast är stabil för h < 2/lamda
+%vilket i vårt fall betyder att h < 1 => N > 80
